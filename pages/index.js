@@ -37,6 +37,7 @@ const Search = () => {
     setNum(0)
     setTotal(0)
     setVideo([])
+    setName('')
     apiSearch(name)
   }
   return (
@@ -50,7 +51,7 @@ const Search = () => {
           <div className={styles.header_conteiner}> 
             <div className={styles.header_conteiner_title}>Введите название канала</div>
             <form onSubmit={clickHandel} className={styles.header_conteiner_form}>
-              <div className={styles.header_conteiner_input}><input placeholder='Name chanel' onChange={(e)=> {
+              <div className={styles.header_conteiner_input}><input placeholder='Name chanel' value={name} onChange={(e)=> {
                 setName(e.target.value)
               }}/></div>
               <div className={styles.header_conteiner_btn}><button type='submit'>Search</button></div>
