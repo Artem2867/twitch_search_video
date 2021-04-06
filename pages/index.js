@@ -1,65 +1,84 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import {useState} from 'react'
+import styles from '../styles/Search.module.sass'
+import Video from './components/video'
+import Up from './components/up'
+import Link from 'next/link'
+import {getUserChanel, getChanelVideo} from '../apiTwitch'
 
-export default function Home() {
+
+const Search = () => {
+  const [video, setVideo] = useState([])
+  const [name, setName] = useState('')
+  const [total, setTotal] = useState(0)
+  const [num, setNum] = useState(0)
+  const [userId, setUserId] = useState('')
+  const apiSearch = async (name) => {
+    const chanel = await getUserChanel(name)
+    setUserId(chanel.users[0]._id)
+    getVideo(chanel.users[0]._id)
+  }
+  const getVideo = async (Id) => {
+    if(userId != Id) {
+      const chanelVideos = await getChanelVideo(Id, 0)
+      setVideo(chanelVideos.videos.map((i) => i))
+      setTotal(chanelVideos._total)
+      setNum(9)
+    } else {
+      const chanelVideos = await getChanelVideo(Id, num)
+      const newVideo = chanelVideos.videos.map((i) => i)
+      setVideo([...video, ...newVideo])
+      setTotal(chanelVideos._total)
+      setNum(num+9)
+    }
+  }
+  function clickHandel(e) {
+    e.preventDefault()
+    setNum(0)
+    setTotal(0)
+    setVideo([])
+    apiSearch(name)
+  }
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Twitch Search Chanel</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <header className={styles.header}>
+        <div className='conteiner'> 
+          <div className={styles.header_conteiner}> 
+            <div className={styles.header_conteiner_title}>Введите название канала</div>
+            <form onSubmit={clickHandel} className={styles.header_conteiner_form}>
+              <div className={styles.header_conteiner_input}><input placeholder='Name chanel' onChange={(e)=> {
+                setName(e.target.value)
+              }}/></div>
+              <div className={styles.header_conteiner_btn}><button type='submit'>Search</button></div>
+            </form>
+            <div className={styles.header_conteiner_btnMain}>
+              <Link href='/main'>Избранные</Link>
+            </div>
+          </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+      </header>
+        {video.length === 0? 
+            <div className='message'>Введите название канала, чтоб посмотреть его видео</div>:
+            <div className='conteiner content'> {video.map((i)=> {
+            return <Video 
+                        key={i._id}
+                        id ={i._id}
+                        title ={i.title}
+                        imgUrl ={i.preview.medium}
+                        url ={i.url}
+                        main= {false}/>
+          })}</div>}
+          {video.length < total? <div className={styles.wrapperBtn}><button className={styles.wrapperBtn_MoreVideo} onClick={() => getVideo(userId)}>Добавить еще видео</button></div>:null}
+          <div className='up'>
+              <Up/>
+          </div>
+      </div>
   )
 }
+
+
+export default Search

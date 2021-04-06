@@ -14,3 +14,42 @@ a {
 * {
   box-sizing: border-box;
 }
+.conteiner {
+    width: 1200px;
+    margin: 0 auto;
+}
+.content {
+  display: grid;
+  grid-template: 1fr/repeat(3, 320px);
+  grid-auto-rows: 1fr;
+  align-content: center;
+  justify-content: space-between;
+  row-gap: 10px;
+  padding-top: 30px;
+}
+.message {
+  font-size: 20px;
+  text-align: center;
+}
+    
+.up {
+  position: fixed;
+  right: 10%;
+  bottom: 5%;
+}
+.up div {
+  background: white;
+  width: 200px;
+  height: 60px;
+  color: black;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 15px 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.up div:hover{
+  background: #0613c9;
+  color: white;
+}
