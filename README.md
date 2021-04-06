@@ -1,34 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Проект сделан на основе Next Js с всеми нативными инструментами, без подключения дополнительных библиотек таких, как apollo grahql, axios, swr и тд. 
+Приложение предназначено для поиска видео по названию канала на платформе twitch.tv.
+Для практического использования приложения необхождимо перейти по ссылки (https://twitch-search-video-8fhcnqtju-artem2867.vercel.app/).
+Небольшая инструкция: 
+    1) Для начала необходимо ввести название канала на пользователя на twitch. После появления видео его можно добавить в избранное или нажать на него чтоб перейти к просмотру видео.
+    2) Видео загружаются по 9 штук, поэтому так же реализована кнопка подгрузки следующих видео и она пропадет как только видео на канале закончатся.
+    3) Во вкладке избранное отмечены все видео, которые туда были перемещены, также они сохраняются в базе данных поэтому не пропадут при перезагрузке. Также вы можете удалить их из этого списка.
+    4) И для удобства реадлизована кнока прокрутки к шапке страницы.
